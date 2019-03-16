@@ -1,0 +1,86 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+ 
+ 
+repositories {
+    mavenCentral()
+}
+
+ext {
+    majorVersion = '1' 
+    minorVersion = '0' 
+    junitPlatformVersion = '1.2.0' 
+    junitJupiterVersion  = '5.2.0'
+    slf4jVersion         = '1.8.0-beta2'	
+    selenideVersion = '5.0.1'
+    seleniumJupiterVersion  = '3.0.0'
+    
+}
+ 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+ 
+jar {
+    baseName = 'vlshestakov_tests'
+ }
+ 
+task testJar(type: Jar, dependsOn: compileTestJava) {
+    group = BasePlugin.BUILD_GROUP 
+    description 'Создаёт основной JAR c кодом тестов'
+    classifier = 'tests'
+    from sourceSets.test.output
+    baseName = 'test-ui'
+}
+ 
+compileTestJava {
+    sourceCompatibility = 8
+    targetCompatibility = 8
+    options.compilerArgs += '-parameters'
+}
+
+ test {
+compileJava.options.encoding = 'utf-8'
+compileTestJava.options.encoding = 'utf-8'
+ }
+ 
+dependencies {
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitJupiterVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitJupiterVersion
+    
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitJupiterVersion
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: junitPlatformVersion
+    
+    compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-console', version: junitPlatformVersion
+	
+    implementation group: 'org.apiguardian', name: 'apiguardian-api', version: '1.0.0'
+
+    implementation group: 'com.codeborne', name: 'selenide', version: selenideVersion
+    testImplementation group: 'io.github.bonigarcia', name: 'selenium-jupiter', version: seleniumJupiterVersion
+    
+
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+    testRuntimeOnly  fileTree(dir: 'lib', include: ['*.jar'])
+    
+}
+ 
+
+task auAmazonTest(type: Test) {
+    description 'auAmazonTest'
+    group = 'Verification'
+    outputs.upToDateWhen { false }
+    
+    testLogging.showStandardStreams = true
+    systemProperties.put("selenide.browser", "chrome")
+
+        useJUnitPlatform {
+        includeTags 'auAmazonTest'
+    }
+}
+
