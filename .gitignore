@@ -1,0 +1,17 @@
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+target/
+.nb-gradle/
+.gradle/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+.metadata/
+.recommenders/
