@@ -1,0 +1,11 @@
+# exercise2
+Пример работы Selenide и Junit 5
+
+Требует предустановленных Java 8 SDK и браузера Chrome
+
+Порядок запуска:
+1. Клонировать репозиторий
+2. Перейти в папку Ui_tests
+3. Выполнить команду
+Ui_tests>./gradlew auAmazonTest
+
