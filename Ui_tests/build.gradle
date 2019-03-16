@@ -12,11 +12,11 @@ repositories {
 ext {
     majorVersion = '1' 
     minorVersion = '0' 
-    junitPlatformVersion = '1.2.0' 
-    junitJupiterVersion  = '5.2.0'
+    junitPlatformVersion = '1.4.0' 
+    junitJupiterVersion  = '5.4.0'
     slf4jVersion         = '1.8.0-beta2'	
-    selenideVersion = '5.0.1'
-    seleniumJupiterVersion  = '3.0.0'
+    selenideVersion = '5.2.2'
+    seleniumJupiterVersion  = '3.1.1'
     
 }
  
