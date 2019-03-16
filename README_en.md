@@ -9,3 +9,6 @@ Startup order:
 2. Go to the folder Ui_tests
 3. Run the command
 Ui_tests>./gradlew auAmazonTest
+
+Attention!
+There are errors on the checked pages. The test fails.
