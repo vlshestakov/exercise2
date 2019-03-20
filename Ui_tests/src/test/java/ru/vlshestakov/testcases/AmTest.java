@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.qameta.allure.Step;
+
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
@@ -58,11 +60,7 @@ public class AmTest extends BaseTestSuite {
 		Page.jumpToTargetСategory();
 
 		log.info("Проверяем страницы...");
-		for (int i = 1; i <= 5; i++) {
-			Page.gotoPageResult(i);
-			checkOnePageResult();
-		}
-
+		checkPages();
 		log.info("==========================================================");
 
 		Page.gotoPageResult(4);
@@ -83,6 +81,16 @@ public class AmTest extends BaseTestSuite {
 		}
 	}
 	
+	@Step
+	private void checkPages() {
+		for (int i = 1; i <= 5; i++) {
+			Page.gotoPageResult(i);
+			checkOnePageResult();
+		}
+
+	}
+	
+	@Step
 	private void checkOnePageResult() {
 		ElementsCollection coll = Page.getElementsOnCurrentPage();
 
@@ -151,7 +159,8 @@ public class AmTest extends BaseTestSuite {
 		return (pageNumber - 1) * Const.COUNT_PRODUCT_ON_PAGE + (lineNumber - 1) * COUNT_PRODUCT_ON_LINE
 				+ positionNumber - 1;
 	}
-	
+
+	@Step
 	private void checkCard(String expectedASIN) {
 
 		log.info("Проверяем ASIN");

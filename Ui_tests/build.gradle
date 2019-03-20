@@ -1,13 +1,23 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
+plugins {
+    id 'io.qameta.allure' version '2.7.0' // Latest Plugin Version
+    id 'java'
 }
- 
+
  
 repositories {
+	jcenter()
     mavenCentral()
 }
+
+allure {
+    autoconfigure = true
+    version = '2.7.0'
+
+    useJUnit5 {
+        version = '2.7.0'
+    }
+}
+
 
 ext {
     majorVersion = '1' 

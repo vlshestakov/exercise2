@@ -11,20 +11,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
 import com.codeborne.selenide.ElementsCollection;
+
+import io.qameta.allure.Step;
 import ru.vlshestakov.common.Const;
 
 public class Page {
 
-	
+	@Step
 	public static void jumpToTargetСategory() {
 		Select selKlass = new Select($(By.id("searchDropdownBox")));
 		selKlass.selectByVisibleText("Pet Supplies");
 		$(By.className("nav-input")).click();
-		$(By.xpath("//li//span[contains(text(),'Cats')]")).should(exist).click();
-		$(By.xpath("//span[@class='a-list-item']//span[contains(text(),'Clothing')]")).should(exist).click();
+		$(By.xpath("//*[@id='leftNav']//h4[text()='Pet Supplies']/../../..//li//span[contains(text(),'Cats')]"))
+			.should(exist)
+			.click();
+		$(By.xpath("//span[@class='a-list-item']//span[contains(text(),'Clothing')]"))
+			.should(exist)
+			.click();
 	}
 
 	
+	@Step
 	public static void gotoPageResult(int pageNumber) {
 
 		String pagnCur_xpath = String.format("//span[@class='pagnCur'][text()='%d']", pageNumber);
