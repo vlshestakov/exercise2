@@ -4,8 +4,8 @@ plugins {
 }
 
 ext {
-//    seleniumVersion = '4.0.0-rc-1'
-    seleniumVersion = '4.0.0-alpha-3'
+    seleniumVersion = '4.0.0-rc-1'
+//    seleniumVersion = '4.0.0-alpha-3'
 
     majorVersion = '1'
     minorVersion = '0'

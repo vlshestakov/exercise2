@@ -9,7 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static org.openqa.selenium.support.locators.RelativeLocator.withTagName;
+//import static org.openqa.selenium.support.locators.RelativeLocator.withTagName;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 
 public class RelativeLocatorsTests {
@@ -52,7 +53,7 @@ public class RelativeLocatorsTests {
 
     @Test
     public void test_book5_is_left_of_book6_and_below_book1(){
-        String id = driver.findElement(withTagName("li")
+        String id = driver.findElement(with(By.tagName("li"))
                         .toLeftOf(By.id("pid6"))
                         .below(By.id("pid1")))
                 .getAttribute("id");
@@ -61,7 +62,7 @@ public class RelativeLocatorsTests {
 
     @Test
     public void test_book2_is_above_book6_and_right_of_book1(){
-        String id = driver.findElement(withTagName("li")
+        String id = driver.findElement(with( By.tagName("li"))
                         .above(By.id("pid6"))
                         .toRightOf(By.id("pid1")))
                 .getAttribute("id");
