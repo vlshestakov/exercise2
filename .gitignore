@@ -12,6 +12,7 @@ target/
 .project
 .settings/
 bin/
-
+.idea
+.allure
 .metadata/
 .recommenders/
