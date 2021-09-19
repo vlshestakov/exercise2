@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" shutdownHook="disable">
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout charset="cp1251"	pattern="%d{ABSOLUTE} %-5p %c{1} - %m%n" />
+		</Console>
+
+		<File name="file" fileName="build/logs/file.log" append="false">
+			<PatternLayout>
+				<Pattern>%d{ABSOLUTE} %5p %t %c{1}:%M:%L - %m%n</Pattern>
+			</PatternLayout>
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="file" />
+		</Root>
+	</Loggers>
+</Configuration>

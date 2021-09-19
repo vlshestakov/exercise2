@@ -1,51 +1,48 @@
 plugins {
-    id 'io.qameta.allure' version '2.7.0' // Latest Plugin Version
+    id 'io.qameta.allure' version '2.8.1' // Latest Plugin Version
     id 'java'
+}
+
+ext {
+//    seleniumVersion = '4.0.0-rc-1'
+    seleniumVersion = '4.0.0-alpha-3'
+
+    majorVersion = '1'
+    minorVersion = '0'
+    log4jVersion = '2.12.0'
+    allureVersion = '2.13.8'
+    junitPlatformVersion = '1.8.0'
+    junitJupiterVersion  = '5.8.0'
+    junitVersion = '4.12'
+    jsonApiVersion = '1.1.4'
 }
 
  
 repositories {
-	jcenter()
     mavenCentral()
 }
 
 allure {
     autoconfigure = true
-    version = '2.7.0'
+    aspectjweaver = true
+    version = allureVersion
+    clean = true
 
     useJUnit5 {
-        version = '2.7.0'
+        version = allureVersion
     }
+
+    downloadLink = "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allureVersion}/allure-commandline-${allureVersion}.zip"
+    configuration = "testImplementation"
 }
 
 
-ext {
-    majorVersion = '1' 
-    minorVersion = '0' 
-    junitPlatformVersion = '1.4.0' 
-    junitJupiterVersion  = '5.4.0'
-    slf4jVersion         = '1.8.0-beta2'	
-    selenideVersion = '5.2.2'
-    seleniumJupiterVersion  = '3.1.1'
-    
-}
- 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
- 
+
 jar {
     baseName = 'vlshestakov_tests'
  }
  
-task testJar(type: Jar, dependsOn: compileTestJava) {
-    group = BasePlugin.BUILD_GROUP 
-    description 'Создаёт основной JAR c кодом тестов'
-    classifier = 'tests'
-    from sourceSets.test.output
-    baseName = 'test-ui'
-}
- 
+
 compileTestJava {
     sourceCompatibility = 8
     targetCompatibility = 8
@@ -59,38 +56,64 @@ compileTestJava.options.encoding = 'utf-8'
  
 dependencies {
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitJupiterVersion
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitJupiterVersion
+    testImplementation(platform('org.junit:junit-bom:5.8.0'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-support', version: seleniumVersion
+
+
+    implementation 'org.apache.poi:poi-ooxml:3.17'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
+
+
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4jVersion
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4jVersion
+
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-1.2-api
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: log4jVersion
+
+
+//    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitJupiterVersion
+//    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitJupiterVersion
     
-    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitJupiterVersion
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: junitPlatformVersion
+//    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitJupiterVersion
+//    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher', version: junitPlatformVersion
     
-    compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
-    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-console', version: junitPlatformVersion
+    //compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+    //testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: slf4jVersion
+    //testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-console', version: junitPlatformVersion
 	
-    implementation group: 'org.apiguardian', name: 'apiguardian-api', version: '1.0.0'
+    //implementation group: 'org.apiguardian', name: 'apiguardian-api', version: '1.0.0'
 
-    implementation group: 'com.codeborne', name: 'selenide', version: selenideVersion
-    testImplementation group: 'io.github.bonigarcia', name: 'selenium-jupiter', version: seleniumJupiterVersion
-    
+    //implementation group: 'com.codeborne', name: 'selenide', version: selenideVersion
+    //testImplementation group: 'io.github.bonigarcia', name: 'selenium-jupiter', version: seleniumJupiterVersion
 
-    implementation fileTree(dir: 'lib', include: ['*.jar'])
-    testRuntimeOnly  fileTree(dir: 'lib', include: ['*.jar'])
+
+    // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.0.3'
+
+
+    //implementation fileTree(dir: 'lib', include: ['*.jar'])
+    //testRuntimeOnly  fileTree(dir: 'lib', include: ['*.jar'])
     
 }
- 
 
-task auAmazonTest(type: Test) {
-    description 'auAmazonTest'
-    group = 'Verification'
-    outputs.upToDateWhen { false }
-    
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+//tasks.named('test') {
+tasks.withType(Test) {
+    useJUnitPlatform()
     testLogging.showStandardStreams = true
-    systemProperties.put("selenide.browser", "chrome")
-
-        useJUnitPlatform {
-        includeTags 'auAmazonTest'
-    }
+//	systemProperties = System.properties
+    enableAssertions = true
+    systemProperties += System.properties
 }
+
 
