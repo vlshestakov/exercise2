@@ -19,6 +19,9 @@ cd Ui_test
 ./gradlew clean test   
 
 Заданный selenoidUrl   
-./gradlew -DselenoidUrl=http://test:123456@srv-at-selenoid-test6:8888/wd/hub clean test
+./gradlew -DselenoidUrl=http://test:123456@srv-at-selenoid-test6:8888/wd/hub clean test   
+
+Паузы в исходнике добавлены, чтобы по vnc можно было отследить, что там происходит.   
+
 
 
