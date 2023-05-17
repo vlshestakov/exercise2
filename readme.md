@@ -1,6 +1,11 @@
 # selenoid azk
 
-Selenium 4, Selenoid, Junit 5
+Проверка работы Selenoid с Selenium 4 и Junit 5
+Тестируемый url   
+http://172.24.25.205:7053/gz/   
+(стенд на srv-doc-at-null)   
+
+Использование:   
 
 клонировать, ветка selenoid-azk   
 git clone https://github.com/vlshestakov/exercise2.git   
