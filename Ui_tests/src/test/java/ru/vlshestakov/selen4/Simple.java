@@ -44,9 +44,9 @@ public class Simple {
     private MainPage mainPage;
 
 
-    //String selenoidUrl = "http://test:123456@srv-at-selenoid-test6:8888/wd/hub";
+    String selenoidUrl = "http://test:123456@srv-at-selenoid-test6:8888/wd/hub";
 
-    String selenoidUrl = "http://172.24.25.205:4444/wd/hub"; //  selenoid srv-doc-at-null
+    //String selenoidUrl = "http://172.24.25.205:4444/wd/hub"; //  selenoid srv-doc-at-null
 
     @BeforeAll
     protected void beforeAll() throws MalformedURLException {
@@ -74,7 +74,7 @@ public class Simple {
         selenoidOptions.put("version", browserVersion);
         selenoidOptions.put("enableVNC", true);
         selenoidOptions.put("enableLog", true);
-        selenoidOptions.put("name", "123456");
+        selenoidOptions.put("name", "shestakov");
         selenoidOptions.put("sessionTimeut", "5m");
 
         Map<String, Object> labelsOptions = new HashMap<>();
