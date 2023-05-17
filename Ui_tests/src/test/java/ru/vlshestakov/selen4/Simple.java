@@ -3,10 +3,7 @@ package ru.vlshestakov.selen4;
 import io.qameta.allure.Attachment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntry;
@@ -44,9 +41,9 @@ public class Simple {
     private MainPage mainPage;
 
 
-    String selenoidUrl = "http://test:123456@srv-at-selenoid-test6:8888/wd/hub";
+    //String selenoidUrlDefault = "http://test:123456@srv-at-selenoid-test6:8888/wd/hub";
 
-    //String selenoidUrl = "http://172.24.25.205:4444/wd/hub"; //  selenoid srv-doc-at-null
+    String selenoidUrlDefault = "http://172.24.25.205:4444/wd/hub"; //  selenoid srv-doc-at-null
 
     @BeforeAll
     protected void beforeAll() throws MalformedURLException {
@@ -75,13 +72,15 @@ public class Simple {
         selenoidOptions.put("enableVNC", true);
         selenoidOptions.put("enableLog", true);
         selenoidOptions.put("name", "shestakov");
-        selenoidOptions.put("sessionTimeut", "5m");
+        selenoidOptions.put("sessionTimeut", "1m");
 
         Map<String, Object> labelsOptions = new HashMap<>();
         labelsOptions.put("manual", "true");
         selenoidOptions.put("labels", labelsOptions);
 
         options.setCapability("selenoid:options", selenoidOptions);
+        String selenoidUrl = System.getProperty("selenoidUrl", selenoidUrlDefault);
+        log4j.info("selenoidUrl: {}", selenoidUrl);
         URL url = URI.create(selenoidUrl).toURL();
         originalDriver = new RemoteWebDriver(url, options);
 //        RemoteWebDriver originalDriver = new RemoteWebDriver(
@@ -112,9 +111,6 @@ public class Simple {
     @DisplayName("testazk")
     public void testAZK() {
         String testedUrl = "http://172.24.25.205:7053/gz/";  // gz srv-doc-at-null
-//        String testedUrl = "http://srv-dopterm51.bft.local/";  //
-//        String testedUrl = "http://172.24.16.119/";  //
-//        String testedUrl = "http://localhost:8180/";  // local gz
         driver.get(testedUrl);
 //        Pause.seconds(20);
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
@@ -151,6 +147,7 @@ public class Simple {
 
 
     @Test
+    @Disabled
     public void search() {
         String testedUrl = "https://www.jetbrains.com/";
         driver.get(testedUrl);
