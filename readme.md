@@ -2,7 +2,7 @@
 
 Selenium 4, Selenoid, Junit 5
 
-клонировать, ветка selenoid-azk
+клонировать, ветка selenoid-azk   
 git clone https://github.com/vlshestakov/exercise2.git   
 cd exercise2   
 git checkout selenoid-azk   
