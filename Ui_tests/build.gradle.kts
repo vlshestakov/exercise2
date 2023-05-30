@@ -23,7 +23,7 @@ val allureVersion = "2.17.3"
 val junitPlatformVersion = "1.9.3"
 val junitJupiterVersion  = "5.9.3"
 val junitVersion = "4.12"
-val seleniumVersion = "4.9.0"
+val seleniumVersion = "3.14.0"
 
 
 allure {

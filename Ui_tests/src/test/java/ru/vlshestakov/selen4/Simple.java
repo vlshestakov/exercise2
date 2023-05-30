@@ -8,9 +8,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
-import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
@@ -41,14 +41,14 @@ public class Simple {
     private MainPage mainPage;
 
 
-    //String selenoidUrlDefault = "http://test:123456@srv-at-selenoid-test6:8888/wd/hub";
+    String selenoidUrlDefault = "http://test:123456@srv-at-selenoid-test6:8888/wd/hub";
 
-    String selenoidUrlDefault = "http://172.24.25.205:4444/wd/hub"; //  selenoid srv-doc-at-null
+    //String selenoidUrlDefault = "http://172.24.25.205:4444/wd/hub"; //  selenoid srv-doc-at-null
 
     @BeforeAll
     protected void beforeAll() throws MalformedURLException {
 //        String browserVersion = "111.0";
-        String browserVersion = "109.0";
+        String browserVersion = "67.0";
 //        String browserVersion = "88.0";
 //        String browserVersion = "93.0"; // ok
         //String browserVersion = "96.0"; // ok
@@ -56,11 +56,15 @@ public class Simple {
 //        String browserVersion = "98.0"; // ok
 //        String browserVersion = "99.0"; // err
 //        String browserVersion = "777.0"; // err
+        DesiredCapabilities browser = new DesiredCapabilities();
+        browser.setCapability("browserName", "chrome");
+        browser.setCapability("browserVersion", browserVersion);
+
         ChromeOptions options = new ChromeOptions();
-        options.setBrowserVersion(browserVersion);
-        options.setScriptTimeout(Duration.ofMinutes(5));
-        options.setImplicitWaitTimeout(Duration.ofMinutes(5));
-        options.setPageLoadTimeout(Duration.ofMinutes(5));
+//        options.setBrowserVersion(browserVersion);
+//        options.setScriptTimeout(Duration.ofMinutes(5));
+//        options.setImplicitWaitTimeout(Duration.ofMinutes(5));
+//        options.setPageLoadTimeout(Duration.ofMinutes(5));
         //options.addArguments("--headless");
         //options.addArguments("--no-sandbox");
         //options.addArguments("--disable-dev-shm-usage");
@@ -77,28 +81,28 @@ public class Simple {
         Map<String, Object> labelsOptions = new HashMap<>();
         labelsOptions.put("manual", "true");
         selenoidOptions.put("labels", labelsOptions);
-
         options.setCapability("selenoid:options", selenoidOptions);
+        browser.setCapability(ChromeOptions.CAPABILITY, options);
         String selenoidUrl = System.getProperty("selenoidUrl", selenoidUrlDefault);
         log4j.info("selenoidUrl: {}", selenoidUrl);
         URL url = URI.create(selenoidUrl).toURL();
-        originalDriver = new RemoteWebDriver(url, options);
+        driver = new RemoteWebDriver(url, options);
 //        RemoteWebDriver originalDriver = new RemoteWebDriver(
 //                URI.create("http://srv-at-selenoid-test6:8090/wd/hub").toURL(), options);
 
-        driver = new EventFiringDecorator<>(RemoteWebDriver.class, new AzkWebDriverListener()).decorate(originalDriver);
-        log4j.info("Используется web-драйвер для selenium grid или selenoid-docker: {}", driver.getCapabilities().getBrowserVersion());
+        //driver = RemoteWebDriver.class, new AzkWebDriverListener()).decorate(originalDriver);
+        //log4j.info("Используется web-драйвер для selenium grid или selenoid-docker: {}", driver.getCapabilities().getBrowserVersion());
 
     }
 
     @AfterAll
     public void tearDown() {
         SessionId sesId = driver.getSessionId();
-        SessionId sesIdOrig = originalDriver.getSessionId();
+        //SessionId sesIdOrig = originalDriver.getSessionId();
 //        sesId.
-        if ( sesIdOrig != null) {
-            originalDriver.quit();
-        }
+        //if ( sesIdOrig != null) {
+//            originalDriver.quit();
+//        }
     }
 
     @Attachment(value = "Page screenshot", type = "image/png")
